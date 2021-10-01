@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Блог{% endblock  %}
+
+{% block content %} 
+
+    <div>
+        <h1><a href="">Django Girls Blog</a></h1>
+    </div>
+    {% if latest_article_list %}
+        {% for a in latest_article_list %}
+            <div>
+                <a href="{% url 'blog:detail' a.id %}">
+                    <div>
+                        <p>published: {{a.pub_date}}</p>
+                        <h2>{{a.article_title}}</h2>
+                        <p>{{a.article_text}}</p>
+                    </div>
+                </a>
+            </div>
+            <div>
+                {% if a.num_of_comments > 0 %}
+                    <p>Кількість коментарів: {{a.num_of_comments}}</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        Статті не знайдені =(
+    {% endif %}
+
+{% endblock  %}

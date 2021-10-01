@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}{{article.article_title}}{% endblock  %}
+
+{% block content %} 
+
+    <h2>{{article.article_title}}</h2>
+
+    <p>{{article.article_text}}</p>
+
+    <em>{{article.pub_date}}</em>
+
+    {% if article.was_published_recently %}
+        НОВА СТАТТЯ
+    {% endif %}
+
+    <hr>
+
+    <form action="{% url 'blog:leave_comment' article.id %}" method="POST">
+
+        {% csrf_token %}
+
+        <input type="text" placeholder="Ваше ім'я" name="name"> <br/>
+        <textarea name="text" required="" placeholder="Текст коментаря" cols="30" rows="10"></textarea> <br/>
+        <button type="submit">Залишити коментар</button>
+    </form>
+        
+    <hr>
+
+    {% if latest_comment_list %}
+        {% for c in latest_comment_list %}
+            <p>
+                <strong>{{c.author_name}}</strong>
+                <p>{{c.comment_text}}</p>
+            </p>
+        {% endfor %}
+    {% else %}
+        Коментарі не знайдено! Станьте першим :)
+    {% endif %}
+
+{% endblock  %}
