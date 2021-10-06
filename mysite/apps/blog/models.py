@@ -13,9 +13,6 @@ class Article(models.Model):
     def was_published_recently(self):
         return self.pub_date >= (timezone.now() - datetime.timedelta(days=7))
 
-    def num_of_comments(self):
-        return self.set_comment.count()
-
     class Meta:
         verbose_name = "Стаття"
         verbose_name_plural = "Статті"
